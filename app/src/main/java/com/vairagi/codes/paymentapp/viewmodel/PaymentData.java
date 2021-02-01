@@ -1,6 +1,7 @@
-package com.vairagi.codes.paymentapp;
+package com.vairagi.codes.paymentapp.viewmodel;
 
 public class PaymentData {
+
     private String paymentOptionName;
     private int paymentOptionImage;
 

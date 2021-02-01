@@ -5,22 +5,49 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.os.PatternMatcher;
+import android.widget.TextView;
+
+import com.vairagi.codes.paymentapp.Adapter.PaymentOptionAdapter;
+import com.vairagi.codes.paymentapp.viewmodel.PaymentData;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<PaymentData> paymentData;
-    PaymentOptionAdapter paymentOptionAdapter;
-    RecyclerView recyclerView;
-    LinearLayoutManager layoutManager;
+
+    private String price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        paymentData = new ArrayList<>();
-        recyclerView = findViewById(R.id.paymentOptionRecyclerView);
+
+        receiveData();
+        loadData();
+
+    }
+
+    private void receiveData() {
+
+        TextView textView = findViewById(R.id.rate);
+
+        String Burger = getIntent().getStringExtra("BurgerRate");
+        String drink = getIntent().getStringExtra("DrinkRate");
+        String pizza = getIntent().getStringExtra("PizzaRate");
+        if (Burger!=null) {
+            price = Burger;
+        }
+        else if(drink!=null) {
+            price = drink;
+        }
+        else if(pizza!=null ) {
+            price = pizza;
+        }
+        textView.setText(price);
+    }
+
+    private void loadData() {
+        ArrayList<PaymentData> paymentData = new ArrayList<>();
+        RecyclerView recyclerView = findViewById(R.id.paymentOptionRecyclerView);
 
         paymentData.add(new PaymentData("PhonePay",R.drawable.phonepay));
         paymentData.add(new PaymentData("GooglePay",R.drawable.googlepay));
@@ -28,11 +55,9 @@ public class MainActivity extends AppCompatActivity {
         paymentData.add(new PaymentData("AmazonPay",R.drawable.amazonpay));
 
         //LayoutManager For RecyclerView
-        layoutManager = new LinearLayoutManager(this);
-
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
-        paymentOptionAdapter = new PaymentOptionAdapter(paymentData,this);
+        PaymentOptionAdapter paymentOptionAdapter = new PaymentOptionAdapter(price,paymentData,this);
         recyclerView.setAdapter(paymentOptionAdapter);
     }
 }

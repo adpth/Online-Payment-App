@@ -1,4 +1,4 @@
-package com.vairagi.codes.paymentapp;
+package com.vairagi.codes.paymentapp.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,17 +17,22 @@ import com.shreyaspatil.easyupipayment.exception.AppNotFoundException;
 import com.shreyaspatil.easyupipayment.listener.PaymentStatusListener;
 import com.shreyaspatil.easyupipayment.model.PaymentApp;
 import com.shreyaspatil.easyupipayment.model.TransactionDetails;
+import com.vairagi.codes.paymentapp.R;
+import com.vairagi.codes.paymentapp.viewmodel.PaymentData;
 
 import java.util.ArrayList;
 
-public class PaymentOptionAdapter extends RecyclerView.Adapter<PaymentOptionAdapter.PaymentOptionViewHolder> implements PaymentStatusListener {
+public class PaymentOptionAdapter extends RecyclerView.Adapter<PaymentOptionAdapter.PaymentOptionViewHolder>
+        implements PaymentStatusListener {
 
     ArrayList<PaymentData> paymentData;
     Context context;
+    String price;
 
-    public PaymentOptionAdapter(ArrayList<PaymentData> paymentData, Context context) {
+    public PaymentOptionAdapter(String price, ArrayList<PaymentData> paymentData, Context context) {
         this.paymentData = paymentData;
         this.context = context;
+        this.price = price;
     }
 
     @NonNull
@@ -41,33 +46,30 @@ public class PaymentOptionAdapter extends RecyclerView.Adapter<PaymentOptionAdap
     public void onBindViewHolder(@NonNull PaymentOptionViewHolder holder, int position) {
        PaymentData currentData = paymentData.get(position);
 
-       holder.textView.setText(currentData.getPaymentOptionName());
        holder.imageView.setImageResource(currentData.getPaymentOptionImage());
-
        holder.itemView.setOnClickListener(view -> {
            switch (currentData.getPaymentOptionName()) {
                case "PhonePay":
-
-
                    try {
                        String transactionId = "TID" + System.currentTimeMillis();
 
                        // START PAYMENT INITIALIZATION
                        EasyUpiPayment.Builder builder = new EasyUpiPayment.Builder((Activity) context)
                                .with(PaymentApp.PHONE_PE)
-                               .setPayeeVpa("9727367829@apl")
-                               .setPayeeName("Darsh monani")
+                               .setPayeeVpa("Your PhonePay id")
+                               .setPayeeName("Your Name")
                                .setTransactionId(transactionId)
                                .setTransactionRefId(transactionId)
-                               .setPayeeMerchantCode("12345")
-                               .setDescription("drscroption")
-                               .setAmount("10.00");
+                               .setPayeeMerchantCode("Merchant Code")
+                               .setDescription("description")
+                               .setAmount(price.concat(".00"));
                        EasyUpiPayment easyUpiPayment = builder.build();
                        easyUpiPayment.startPayment();
                    } catch (AppNotFoundException e) {
                        e.printStackTrace();
                    }
                    break;
+
                case "GooglePay":
                    try {
                        String transactionId = "TID" + System.currentTimeMillis();
@@ -75,13 +77,13 @@ public class PaymentOptionAdapter extends RecyclerView.Adapter<PaymentOptionAdap
                        // START PAYMENT INITIALIZATION
                        EasyUpiPayment.Builder builder = new EasyUpiPayment.Builder((Activity) context)
                                .with(PaymentApp.GOOGLE_PAY)
-                               .setPayeeVpa("9727367829@apl")
-                               .setPayeeName("Darsh monani")
+                               .setPayeeVpa("Your GooglePay id")
+                               .setPayeeName("Your Name")
                                .setTransactionId(transactionId)
                                .setTransactionRefId(transactionId)
-                               .setPayeeMerchantCode("12345")
-                               .setDescription("drscroption")
-                               .setAmount("10.00");
+                               .setPayeeMerchantCode("Merchant Code")
+                               .setDescription("description")
+                               .setAmount(price.concat(".00"));
                        EasyUpiPayment easyUpiPayment = builder.build();
                        easyUpiPayment.startPayment();
                    } catch (AppNotFoundException e) {
@@ -96,13 +98,13 @@ public class PaymentOptionAdapter extends RecyclerView.Adapter<PaymentOptionAdap
                        // START PAYMENT INITIALIZATION
                        EasyUpiPayment.Builder builder = new EasyUpiPayment.Builder((Activity) context)
                                .with(PaymentApp.PAYTM)
-                               .setPayeeVpa("9727367829@apl")
-                               .setPayeeName("Darsh monani")
+                               .setPayeeVpa("Your Paytm ID")
+                               .setPayeeName("Your Name")
                                .setTransactionId(transactionId)
                                .setTransactionRefId(transactionId)
-                               .setPayeeMerchantCode("12345")
-                               .setDescription("drscroption")
-                               .setAmount("10.00");
+                               .setPayeeMerchantCode("Merchant Code")
+                               .setDescription("description")
+                               .setAmount(price.concat(".00"));
                        EasyUpiPayment easyUpiPayment = builder.build();
                        easyUpiPayment.startPayment();
                    } catch (AppNotFoundException e) {
@@ -117,20 +119,19 @@ public class PaymentOptionAdapter extends RecyclerView.Adapter<PaymentOptionAdap
                        // START PAYMENT INITIALIZATION
                        EasyUpiPayment.Builder builder = new EasyUpiPayment.Builder((Activity) context)
                                .with(PaymentApp.AMAZON_PAY)
-                               .setPayeeVpa("9727367829@apl")
-                               .setPayeeName("Darsh monani")
+                               .setPayeeVpa("Your AmazonPay ID")
+                               .setPayeeName("Your Name")
                                .setTransactionId(transactionId)
                                .setTransactionRefId(transactionId)
-                               .setPayeeMerchantCode("12345")
-                               .setDescription("drscroption")
-                               .setAmount("10.00");
+                               .setPayeeMerchantCode("Merchant Code")
+                               .setDescription("description")
+                               .setAmount(price.concat(".00"));
                        EasyUpiPayment easyUpiPayment = builder.build();
                        easyUpiPayment.startPayment();
                    } catch (AppNotFoundException e) {
                        e.printStackTrace();
                    }
                    break;
-
            }
        });
 

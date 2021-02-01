@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PaymentApp</string>
+    <string name="amount_to_be_paid">Amount to be Paid</string>
+    <string name="pizza">Pizza</string>
+    <string name="cool_drinks">Cool Drinks</string>
+    <string name="burger">Burger</string>
 </resources>
